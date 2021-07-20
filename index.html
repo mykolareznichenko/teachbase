@@ -9,17 +9,49 @@
 </head>
 
 <body>
-   <div id="item1">
-      <h3 data-field="title">Some title</h3>
-      <p data-field="description"></p>
-      <p data-field="test1"></p>
-      <p data-field="test2"></p>
-   </div>
+
+   <p id="text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique, earum possimus eaque mollitia illo
+      voluptatem
+      blanditiis amet molestiae nisi optio temporibus consequuntur quo? Error unde similique quas asperiores nemo ullam.
+   </p>
 
    <script src="./task1.js"></script>
 
 
-   <ul id="listContainer"></ul>
+   <p class="warning">Don't divide by zero</p>
+
+   <div id="calculator" class="calculator">
+
+      <button id="clear" class="clear">C</button>
+
+      <div id="viewer" class="viewer">0</div>
+
+      <button class="num" data-num="7">7</button>
+      <button class="num" data-num="8">8</button>
+      <button class="num" data-num="9">9</button>
+      <button data-ops="plus" class="ops">+</button><br>
+
+      <button class="num" data-num="4">4</button>
+      <button class="num" data-num="5">5</button>
+      <button class="num" data-num="6">6</button>
+      <button data-ops="minus" class="ops">-</button><br>
+
+      <button class="num" data-num="1">1</button>
+      <button class="num" data-num="2">2</button>
+      <button class="num" data-num="3">3</button>
+      <button data-ops="times" class="ops">*</button><br>
+
+      <button class="num" data-num="0">0</button>
+      <button class="num" data-num=".">.</button>
+      <button id="equals" class="equals" data-result="">=</button>
+      <button data-ops="divided by" class="ops">/</button>
+   </div>
+
+   <div>
+      <input id="inputOperator" placeholder="button name">
+      <input id="inputAction" placeholder="type function">
+      <button id="addOperation">Add new operation</button>
+   </div>
 
    <script src="./task2.js"></script>
 
