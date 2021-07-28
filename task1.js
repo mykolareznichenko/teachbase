@@ -1,118 +1,38 @@
-class MyPromise {
-   constructor(callback) {
+const API_KEY = 'ZNYixbxgW7Vrbi2RKhv49qLDUnty2eRn'
 
-      this.state = 'PENDING';
-      this.value = undefined;
-      this.handlers = [];
+const getGif = GetGif()
+input.addEventListener('input', getGif)
 
-      try {
-         callback(this._resolve, this._reject);
-      } catch (err) {
-         this._reject(err)
+const getGif2 = GetGif()
+input2.addEventListener('input', getGif2)
+
+let cache = {}
+function GetGif() {
+   let limitRequest = false
+   setInterval(() => {
+      limitRequest = false
+   }, 500);
+
+   return (event) => {
+      if (limitRequest) {
+         console.log("Слишком часто")
+         return
       }
-   }
-
-   _resolve = (value) => {
-      this.updateResult(value, 'FULFILLED');
-   }
-
-   _reject = (error) => {
-      this.updateResult(error, 'REJECTED');
-   }
-
-   updateResult(value, state) {
-      setTimeout(() => {
-
-         if (this.state !== 'PENDING') {
-            return;
-         }
-
-         this.value = value;
-         this.state = state;
-
-         this.executeHandlers();
-      }, 0);
-   }
-
-   then(onSuccess, onFail) {
-      return new MyPromise((res, rej) => {
-         this.addHandlers({
-            onSuccess: function (value) {
-               if (!onSuccess) {
-                  return res(value);
-               }
-               try {
-                  return res(onSuccess(value))
-               } catch (err) {
-                  return rej(err);
-               }
-            },
-            onFail: function (value) {
-               if (!onFail) {
-                  return rej(value);
-               }
-               try {
-                  return res(onFail(value))
-               } catch (err) {
-                  return rej(err);
-               }
+      if (event.target.value in cache) {
+         console.log('достаём из кэша')
+         console.log(cache[event.target.value])
+         return
+      }
+      limitRequest = true
+      fetch(`https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${event.target.value}`)
+         .then(resp => resp.json())
+         .then(data => {
+            console.log(data)
+            cache = {
+               ...cache,
+               [event.target.value]: data
             }
-         });
-      });
-   }
-
-   catch(onFail) {
-      return this.then(null, onFail);
-   }
-
-   finally(callback) {
-      return new MyPromise((res, rej) => {
-         let val;
-         let wasRejected;
-         this.then((value) => {
-            wasRejected = false;
-            val = value;
-            return callback();
-         }, (err) => {
-            wasRejected = true;
-            val = err;
-            return callback();
-         }).then(() => {
-            if (!wasRejected) {
-               return res(val);
-            }
-            return rej(val);
          })
-      })
-   }
-
-   addHandlers(handlers) {
-      this.handlers.push(handlers);
-      this.executeHandlers();
-   }
-
-   executeHandlers() {
-      if (this.state === 'PENDING') {
-         return null;
-      }
-
-      this.handlers.forEach((handler) => {
-         if (this.state === 'FULFILLED') {
-            return handler.onSuccess(this.value);
-         }
-         return handler.onFail(this.value);
-         //    .then(res => console.log(res))
-      });
-      this.handlers = [];
+         .catch(e => console.log(`resp finished with err: ${e}`))
    }
 }
-
-let promise = new MyPromise((resolve, reject) => {
-   setTimeout(() => resolve("Hello"), 2000)
-   setTimeout(() => reject("Oppa"), 2500)
-})
-   .then(res => console.log(res))
-   .catch(err => console.log(err))
-
-
-console.log(promise)
