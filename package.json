@@ -1,0 +1,31 @@
+{
+  "name": "teachbase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "task1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mykolareznichenko/teachbase.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mykolareznichenko/teachbase/issues"
+  },
+  "homepage": "https://github.com/mykolareznichenko/teachbase#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "html-webpack-plugin": "^5.3.2",
+    "webpack": "^5.48.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "css-loader": "^6.2.0",
+    "lodash": "^4.17.21",
+    "style-loader": "^3.2.1"
+  }
+}
